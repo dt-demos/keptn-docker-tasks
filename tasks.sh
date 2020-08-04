@@ -13,7 +13,7 @@ case $task in
     ;;
 
   keptn)
-    keptn "$@"
+    "$@"
     ;;
 
   *)
