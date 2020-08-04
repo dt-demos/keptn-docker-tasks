@@ -41,7 +41,7 @@ processType=pass_on_warning     # e.g. ignore, pass_on_warning, fail_on_warning
 debug=true
 build=123                      
 
-docker run -i \
+docker run --rm \
     --env API_URL=$keptnApiUrl \
     --end BRIDGE_URL=$keptnBridgeUrl \
     --env KEPTN_TOKEN=$keptnApiToken \
