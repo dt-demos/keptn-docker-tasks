@@ -3,10 +3,10 @@
 Script that will perform the logic to perform a [Keptn SLO evaluation](https://keptn.sh/docs/0.7.x/quality_gates/) often referred to as a `quality gate`.
 
 Use Cases:
-* Add this following a performance test to automate results analysis
-* Add this to code pipeline as a quality gate prior to deploying to another environment
-* Add this to following the performance test of individual services as a prerequisite quality gate to integrated tests
-* Add this following a deployment based on real-user traffic to ensure it was successful
+* Add task following a performance test to automate results analysis
+* Add task to code pipeline as a quality gate prior to deploying to another environment
+* Add task to following the performance test of individual services as a prerequisite quality gate to integrated tests
+* Add task following a deployment based on real-user traffic to ensure it was successful
 
 Script logic:
 1. For the provided Keptn project, service, and stage, send a `sh.keptn.event.start-evaluation` event to the Keptn Event API and saves the `keptncontext ID` returned from the response
@@ -21,14 +21,13 @@ Script logic:
 
 Assumption for setup:
 * Have a service onboarded.  See example this repo for example for how to setup keptn on k3s with a sample application - https://github.com/dt-demos/keptn-k3s-demo
-* Have docker to run the `docker run` command
 
 Call the `docker run` command as shown in this example. 
 
 ```
 #!/bin/bash
 
-image=dtdemos/keptn-quality-gate-bash:0.1.0
+image=dtdemos/keptn-docker-task:0.1.0
 keptnApiUrl=https://api.keptn.<YOUR KEPTN DOMAIN>
 keptnApiToken=<YOUR KEPTN TOKEN>
 start=2020-07-23T21:22:20Z
@@ -41,7 +40,7 @@ processType=pass_on_warning     # e.g. ignore, pass_on_warning, fail_on_warning
 debug=true
 build=123                      
 
-docker run -it --rm \
+docker run -i \
     --env KEPTN_URL=$keptnApiUrl \
     --env KEPTN_TOKEN=$keptnApiToken \
     --env START=$start \
@@ -53,7 +52,7 @@ docker run -it --rm \
     --env PROCESS_TYPE=$processType \
     --env DEBUG=$debug \
     --env LABELS='{"source":"'$source'","build":"'$build'"}' \
-    $image ./qualitygate.sh
+    $image qualitygate
 ```
 
 Refer to the table below for parameters:

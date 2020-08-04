@@ -12,18 +12,20 @@ Refer to the image tagging for Keptn version compatibility
 
 # Usage
 
-1. Keptn CLI
+Use the `docker run` command with a `task type` argument. Valid `task type` are: 
 
-    The keptn CLI is build into the image can can can be run with any parameters it supports.  For example
+1. **keptn**
+
+    The [Keptn CLI](https://keptn.sh/docs/0.7.x/reference/cli/) is build into the image can be run with any additon parameters it supports.  For example
     ```
     # authenticate
     docker run dtdemos/keptn-docker-tasks keptn auth --api-token $TOKEN --endpoint $URL
-    # get keptn statuss
+    # get keptn status
     docker run dtdemos/keptn-docker-tasks keptn status
     ```
 
-1. [Keptn Prepare Project](./PREPAREPROJECT.md)
-1. [Keptn Quality Gate](./QUALITYGATE.md)
+1. **prepareproject** - See [README](./PREPAREPROJECT.md)
+1. **qualitygate** - See [README](./QUALITYGATE.md)
 
 # Development
 
@@ -34,9 +36,9 @@ Use the following helper unix bash scripts to build and test the docker image
 
 The image tag will be read from the `version` file.  When you publish a new version update the 'Keptn Compatibility Matrix' in this README.
 
-Local setup
+Testing
 
-1. Copy the example from the `usage` section above into a file called `test.sh` and then adjust the values for your testing. Note that `test.sh` is part of `.gitignore` so fill in your unique arguments and they won't be saved to the repo.
+1. Copy the example from the `usage` sections in the README files into a file called `test.sh` and then adjust the values for your testing. Note that `test.sh` is part of `.gitignore` so fill in your unique arguments and they won't be saved to the repo.
 
 1. After you save the file run `chmod +x test.sh`
 

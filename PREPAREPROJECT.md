@@ -3,7 +3,7 @@
 Dockerized script that will perform the logic to perform a [Keptn Onboard Project](https://keptn.sh/docs/0.7.x/manage/project/)
 
 Use Cases:
-* Add this prior to sending the keptn evaluation
+* Add task prior to sending calling the keptn quality gate task
 
 Script logic:
 1. Valiate the passed in shipyard, sli, and slo files exists
@@ -17,17 +17,16 @@ Script logic:
 # Usage
 
 Assumption for setup:
-* The service is onboarded to keptn.
-* Have docker to run the `docker run` command
+* The `docker run` command assumes a single `volume` that contained all the input files 
 
 Call the `docker run` command as shown in this example. 
 
-NOTE: the path to the files match the VOLUME that was specified in the docker run command. In this example mapped to the `/tmp` directory within docker.
+*NOTE: the path to the files are in the VOLUME that was specified in the docker run command. In this example mapped to the `/tmp` directory within docker.*
 
 ```
 #!/bin/bash
 
-image=dtdemos/keptn-prepare-project-bash:0.1.0
+image=dtdemos/keptn-docker-task:0.1.0
 keptnApiUrl=https://api.keptn.<YOUR KEPTN DOMAIN>
 keptnApiToken=<YOUR KEPTN TOKEN>
 project=demo
@@ -41,7 +40,7 @@ dynatraceMonitoring=true
 dynatraceSliFile=/tmp/testing/dynatrace/sli.yaml
 debug=true
 
-docker run -it --rm \
+docker run -i \
     --env KEPTN_URL=$keptnApiUrl \
     --env KEPTN_TOKEN=$keptnApiToken \
     --env PROJECT=$project \
@@ -52,9 +51,9 @@ docker run -it --rm \
     --env SLO_FILE=$sloFile \
     --env DYNATRACE_MONITORING=$dynatraceMonitoring \
     --env DYNATRACE_SLI_FILE=$dynatraceSliFile \
-    --env DEBUG=$debug \
+    --env DEBUG=$debugx \
     -v ${PWD}:/tmp \
-    $image ./prepareproject.sh
+    $image prepareproject
 ```
 
 Refer to the table below for parameters:
