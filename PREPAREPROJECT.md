@@ -41,7 +41,7 @@ dynatraceSliFile=/tmp/testing/dynatrace/sli.yaml
 debug=true
 
 docker run -i \
-    --env KEPTN_URL=$keptnApiUrl \
+    --env API_URL=$keptnApiUrl \
     --env KEPTN_TOKEN=$keptnApiToken \
     --env PROJECT=$project \
     --env SERVICE=$service \

@@ -10,7 +10,7 @@ DYNATRACE_MONITORING=${DYNATRACE_MONITORING:="true"}
 # JMETER_FILE
 
 # Required parameters
-KEPTN_URL=${KEPTN_URL:?'KEPTN_URL ENV variable missing.'}
+API_URL=${API_URL:?'API_URL ENV variable missing.'}
 KEPTN_TOKEN=${KEPTN_TOKEN:?'KEPTN_TOKEN ENV variable missing.'}
 PROJECT=${PROJECT:?'PROJECT ENV variable missing.'}
 SERVICE=${SERVICE:?'SERVICE ENV variable missing.'}
@@ -19,8 +19,8 @@ SHIPYARD_FILE=${SHIPYARD_FILE:?'SLO_FILE ENV variable missing'}
 SLO_FILE=${SLO_FILE:?'SLO_FILE ENV variable missing'}
 
 # validate inputs
-if [ "${KEPTN_URL: -4}" != "/api" ]; then
-  echo "Aborting: KEPTN_URL must end with /api"
+if [ "${API_URL: -4}" != "/api" ]; then
+  echo "Aborting: API_URL must end with /api"
   exit 1
 fi
 
@@ -43,7 +43,7 @@ fi
 echo "================================================================="
 echo "Keptn Prepare Project"
 echo ""
-echo "KEPTN_URL            = $KEPTN_URL"
+echo "API_URL              = $API_URL"
 echo "PROJECT              = $PROJECT"
 echo "SERVICE              = $SERVICE"
 echo "STAGE                = $STAGE"
@@ -57,7 +57,7 @@ echo "DEBUG                = $DEBUG"
 echo "================================================================="
 
 # authorize keptn cli
-keptn auth --api-token "$KEPTN_TOKEN" --endpoint "$KEPTN_URL"
+keptn auth --api-token "$KEPTN_TOKEN" --endpoint "$API_URL"
 if [ $? -ne 0 ]; then
     echo "Aborting: Failed to authenticate Keptn CLI"
     exit 1
