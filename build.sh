@@ -5,7 +5,7 @@ tag=$(cat version)
 
 if [ -z $image ]; then
   echo "ABORTING: Image is a required argument"
-  echo "example usage: ./build.sh dtdemos/keptn-docker-tasks:0.1.0"
+  echo "example usage: ./build.sh dtdemos/keptn-docker-tasks"
   exit 1
 fi
 
