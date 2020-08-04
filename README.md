@@ -12,20 +12,36 @@ Refer to the image tagging for Keptn version compatibility
 
 # Usage
 
-Use the `docker run` command with a `task type` argument. Valid `task type` are: 
+Use the `docker run` command with a `task type` argument. General syntax is:
+
+```
+docker run --rm \
+    --env [VARIABLE-1]=[VALUE-1] \
+    --env [VARIABLE-2]=[VALUE-2] \
+    run dtdemos/keptn-docker-tasks:0.1.0 [TASK TYPE]
+```
+
+Valid `task types` are: 
 
 1. **keptn**
 
-    The [Keptn CLI](https://keptn.sh/docs/0.7.x/reference/cli/) is build into the image can be run with any additon parameters it supports.  For example
+    This task does use any ENVIRONMENT variables.  Instead, this task just calls the [Keptn CLI](https://keptn.sh/docs/0.7.x/reference/cli/) that is build into the image with any addition command arguments.  For example:
+
     ```
-    # authenticate
-    docker run dtdemos/keptn-docker-tasks keptn auth --api-token $TOKEN --endpoint $URL
-    # get keptn status
-    docker run dtdemos/keptn-docker-tasks keptn status
+    # authenticate Keptn CLI
+    docker run dtdemos/keptn-docker-tasks:0.1.0 keptn auth --api-token $TOKEN --endpoint $URL
+    
+    # get Keptn status
+    docker run dtdemos/keptn-docker-tasks:0.1.0 keptn status
     ```
 
-1. **prepareproject** - See [README](./PREPAREPROJECT.md)
-1. **qualitygate** - See [README](./QUALITYGATE.md)
+1. **prepareproject**
+
+    This task will perform the logic to [Onboard a Project and Service to Keptn](https://keptn.sh/docs/0.7.x/manage/project/). This task does uses a Docker volume as to gain access to the various files required to create a project, onboard a service, and add various resource files.  See this [README](./PREPAREPROJECT.md) for details.
+
+1. **qualitygate**
+
+    This task performs the logic to perform a [Keptn SLO evaluation](https://keptn.sh/docs/0.7.x/quality_gates/) often referred to as a `quality gate`.  See this [README](./QUALITYGATE.md) for details.
 
 # Development
 
