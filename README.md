@@ -1,6 +1,6 @@
 # Overview
 
-Dockerized set of scripts to support Keptn use case integration into CI/CI pipelines as tasks.
+Dockerized set of scripts to support Keptn use case integration into CI/CD pipelines as tasks.
 
 # Keptn Compatibility Matrix
 
