@@ -29,6 +29,7 @@ Call the `docker run` command as shown in this example.
 
 image=dtdemos/keptn-docker-task:0.1.0
 keptnApiUrl=https://api.keptn.<YOUR KEPTN DOMAIN>
+keptnBridgeUrl=https://bridge.keptn.<YOUR KEPTN DOMAIN>
 keptnApiToken=<YOUR KEPTN TOKEN>
 start=2020-07-23T21:22:20Z
 end=2020-07-23T21:22:37Z
@@ -41,7 +42,8 @@ debug=true
 build=123                      
 
 docker run -i \
-    --env KEPTN_URL=$keptnApiUrl \
+    --env API_URL=$keptnApiUrl \
+    --end BRIDGE_URL=$keptnBridgeUrl \
     --env KEPTN_TOKEN=$keptnApiToken \
     --env START=$start \
     --env END=$end \

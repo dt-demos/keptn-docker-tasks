@@ -8,7 +8,8 @@ WAIT_LOOPS=${WAIT_LOOPS:="20"}
 SOURCE=${SOURCE:="unknown"}
 
 # Required parameters
-KEPTN_URL=${KEPTN_URL:?'KEPTN_URL ENV variable missing.'}
+API_URL=${API_URL:?'API_URL ENV variable missing.'}
+BRIDGE_URL=${BRIDGE_URL:?'BRIDGE_URL ENV variable missing.'}
 KEPTN_TOKEN=${KEPTN_TOKEN:?'KEPTN_TOKEN ENV variable missing.'}
 START=${START:?'START ENV variable missing.'}
 END=${END:?'END ENV variable missing.'}
@@ -16,15 +17,16 @@ PROJECT=${PROJECT:?'PROJECT ENV variable missing.'}
 SERVICE=${SERVICE:?'SERVICE ENV variable missing.'}
 STAGE=${STAGE:?'STAGE ENV variable missing.'}
 
-if [ "${KEPTN_URL: -4}" != "/api" ]; then
-  echo "Aborting: KEPTN_URL must end with /api"
+if [ "${API_URL: -4}" != "/api" ]; then
+  echo "Aborting: API_URL must end with /api"
   exit 1
 fi
 
 echo "================================================================="
 echo "Keptn Quality Gate:"
 echo ""
-echo "KEPTN_URL      = $KEPTN_URL"
+echo "API_URL        = $API_URL"
+echo "BRIDGE_URL     = $BRIDGE_URL"
 echo "START          = $START"
 echo "END            = $END"
 echo "PROJECT        = $PROJECT"
@@ -62,7 +64,7 @@ if [[ "${DEBUG}" == "true" ]]; then
 fi
 
 echo "Sending start Keptn Evaluation"
-POST_RESPONSE=$(curl -s -k -X POST --url "${KEPTN_URL}/v1/event" -H "Content-type: application/json" -H "x-token: ${KEPTN_TOKEN}" -d "$POST_BODY")
+POST_RESPONSE=$(curl -s -k -X POST --url "${API_URL}/v1/event" -H "Content-type: application/json" -H "x-token: ${KEPTN_TOKEN}" -d "$POST_BODY")
 
 if [[ "${DEBUG}" == "true" ]]; then
   echo ""
@@ -82,7 +84,7 @@ i=0
 while [ $i -lt $WAIT_LOOPS ]
 do
     i=`expr $i + 1`
-    result=$(curl -s -k -X GET "${KEPTN_URL}/v1/event?keptnContext=${ctxid}&type=sh.keptn.events.evaluation-done" -H "accept: application/json" -H "x-token: ${KEPTN_TOKEN}")
+    result=$(curl -s -k -X GET "${API_URL}/v1/event?keptnContext=${ctxid}&type=sh.keptn.events.evaluation-done" -H "accept: application/json" -H "x-token: ${KEPTN_TOKEN}")
     status=$(echo $result|jq -r ".data.evaluationdetails.result")
     if [ "$status" = "null" ]; then
       echo "Waiting for results (attempt $i of $WAIT_LOOPS)..."
@@ -97,9 +99,12 @@ echo "Writing results to file $filename."
 echo $result|jq > $filename
 cat $filename
 
+ID=$(echo $result|jq -r '.id')
 echo "================================================================="
 echo "Result = $(echo $result|jq)"
+echo "================================================================="
 echo "Status = ${status}"
+echo "Bridge = $BRIDGE_URL/bridge/project/$PROJECT/$SERVICE/$ctxid/$ID"
 echo "================================================================="
 
 # determine if process the result
