@@ -34,6 +34,12 @@ if [ ! -f "$SLO_FILE" ]; then
 fi
 
 if [ "$DYNATRACE_MONITORING" == "true" ]; then
+  if [ ! -z "$DYNATRACE_CONF_FILE" ]; then
+    if [ ! -f "$DYNATRACE_CONF_FILE" ]; then
+        echo "Aborting: $DYNATRACE_CONF_FILE does not exist."
+        exit 1
+    fi
+  fi
   if [ ! -f "$DYNATRACE_SLI_FILE" ]; then
       echo "Aborting: $DYNATRACE_SLI_FILE does not exist."
       exit 1
@@ -51,6 +57,7 @@ echo "SOURCE               = $SOURCE"
 echo "SHIPYARD_FILE        = $SHIPYARD_FILE"
 echo "SLO_FILE             = $SLO_FILE"
 echo "DYNATRACE_MONITORING = $DYNATRACE_MONITORING"
+echo "DYNATRACE_CONF_FILE  = $DYNATRACE_CONF_FILE"
 echo "DYNATRACE_SLI_FILE   = $DYNATRACE_SLI_FILE"
 echo "JMETER_FILE          = $JMETER_FILE"
 echo "DEBUG                = $DEBUG"
@@ -81,6 +88,9 @@ fi
 if [ "$DYNATRACE_MONITORING" == "true" ]; then
   keptn configure monitoring dynatrace --project=$PROJECT
   keptn add-resource --project=$PROJECT --stage=$STAGE --service=$SERVICE --resource=$DYNATRACE_SLI_FILE --resourceUri=dynatrace/sli.yaml
+  if [ ! -z "$DYNATRACE_CONF_FILE" ]; then
+    keptn add-resource --project=$PROJECT --stage=$STAGE --service=$SERVICE --resource=$DYNATRACE_CONF_FILE --resourceUri=dynatrace/dynatrace.conf.yaml
+  fi
 fi
 
 # always add SLO resources

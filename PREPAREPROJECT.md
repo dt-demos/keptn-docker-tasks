@@ -38,6 +38,7 @@ sloFile=/tmp/testing/slo.yaml
 jmeterFile=
 dynatraceMonitoring=true
 dynatraceSliFile=/tmp/testing/dynatrace/sli.yaml
+dynatraceConfFile=/tmp/testing/dynatrace/dynatrace.conf.yaml
 debug=true
 
 docker run --rm \
@@ -51,6 +52,7 @@ docker run --rm \
     --env SLO_FILE=$sloFile \
     --env DYNATRACE_MONITORING=$dynatraceMonitoring \
     --env DYNATRACE_SLI_FILE=$dynatraceSliFile \
+    --env DYNATRACE_CONF_FILE=$dynatraceConfFile \
     --env DEBUG=$debugx \
     -v ${PWD}:/tmp \
     $image prepareproject
@@ -70,6 +72,7 @@ Refer to the table below for parameters:
 |   | SOURCE | Description for the evaluation request | example: Azure-DevOps  | unknown |
 |   | DEBUG | Detailed Messsage | true, false  | false |
 |   | DYNATRACE_MONITORING | Configure Dynatrace monitoring for Keptn | true, false  | true |
+|   | DYNATRACE_CONF_FILE | File path for custom tagged entities | example: /tmp/dynatrace/dynatrace.conf.yaml |
 |   | DYNATRACE_SLI_FILE | Keptn sli file path within docker | example: /tmp/dynatrace/shipyard.yaml  |  |
 |   | JMETER_FILE | Keptn jmeter file path within docker | example: /tmp/myscript.jmx  |  |
 
