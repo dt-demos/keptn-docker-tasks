@@ -103,8 +103,9 @@ ID=$(echo $result|jq -r '.id')
 echo "================================================================="
 echo "Result = $(echo $result|jq)"
 echo "================================================================="
-echo "Status = ${status}"
-echo "Bridge = $BRIDGE_URL/bridge/project/$PROJECT/$SERVICE/$ctxid/$ID"
+echo "Evaluation Status = ${status}"
+echo "For details visit the Keptn Bridge."
+echo "$BRIDGE_URL/bridge/project/$PROJECT/$SERVICE/$ctxid/$ID"
 echo "================================================================="
 
 # determine if process the result
@@ -118,13 +119,11 @@ if [ "$status" = "pass" ]; then
 elif [ "$status" = "warning" ]; then
   if [ "${PROCESS_TYPE}" == "fail_on_warning" ]; then
     echo "Keptn Quality Gate - Got Warning status. Evaluation failed!"
-    echo "For details visit the Keptn Bridge!"
     exit 1
   else
     echo "Keptn Quality Gate - Evaluation Succeeded with Warning"
   fi
 else
   echo "Keptn Quality Gate - Got Fail status. Evaluation failed!"
-  echo "For details visit the Keptn Bridge!"
   exit 1
 fi
